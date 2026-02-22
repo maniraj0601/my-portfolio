@@ -1,0 +1,190 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   THEME TOKENS
+   Register custom design tokens so Tailwind generates utility
+   classes like bg-navy, text-amber, border-aqua, etc.
+   ============================================================ */
+@theme {
+  /* Portfolio palette */
+  --color-navy: var(--palette-navy);
+  --color-forest: var(--palette-forest);
+  --color-amber: var(--palette-amber);
+  --color-aqua: var(--palette-aqua);
+  --color-blush: var(--palette-blush);
+  --color-mint: var(--palette-mint);
+
+  /* Semantic aliases used by generic UI components */
+  --color-surface: var(--palette-surface);
+  --color-background: var(--palette-background);
+  --color-foreground: var(--palette-foreground);
+  --color-muted: var(--palette-muted);
+  --color-border: var(--palette-border);
+
+  /* Typography */
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ============================================================
+   PALETTE — LIGHT MODE
+   ============================================================ */
+:root {
+  --palette-navy: #0c2c47;
+  --palette-forest: #2d5652;
+  --palette-amber: #e2a54d;
+  --palette-aqua: #97d3cd;
+  --palette-blush: #efeae6;
+  --palette-mint: #e4f2ea;
+
+  /* Semantic */
+  --palette-surface: #efeae6;
+  --palette-background: #ffffff;
+  --palette-foreground: #0c2c47;
+  --palette-muted: #2d5652;
+  --palette-border: #d8d0c8;
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+*,
+*::before,
+*::after {
+  border-color: var(--palette-border);
+}
+
+body {
+  background-color: var(--palette-background);
+  color: var(--palette-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   MOBILE MENU KEYFRAME ANIMATIONS
+   Used by the full-screen overlay nav on mobile.
+   ============================================================ */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Applied via JS class toggling */
+.menu-link-enter {
+  animation: slideUp 0.5s ease forwards;
+}
+
+.menu-fade-enter {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* ============================================================
+   HERO ENTRANCE ANIMATION
+   Elements inside the hero use this class with staggered
+   animation-delay inline styles.
+   ============================================================ */
+@keyframes heroEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-enter {
+  opacity: 0;
+  animation: heroEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ============================================================
+   TYPEWRITER CURSOR
+   ============================================================ */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  display: inline-block;
+  width: 2px;
+  height: 0.8em;
+  background-color: currentColor;
+  margin-left: 3px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: blink 0.9s step-end infinite;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   Default: fade up. Variants: fade-left, fade-right.
+   The 'is-visible' class is added by useReveal / useRevealStagger.
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter,
+  .reveal,
+  .reveal-left,
+  .reveal-right {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
